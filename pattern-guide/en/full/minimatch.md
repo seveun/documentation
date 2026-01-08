@@ -229,9 +229,3 @@ When you want to crawl the entire site but exclude certain sections:
 | `**/blog` | `**/blog/**` (missing trailing slash) |
 | `blog` (subdomain) | `blog.` (missing dot) |
 
----
-
-## Testing
-
-Test your patterns before entering them in the frontend:
-- [regex101.com](https://regex101.com/) - Online pattern tester

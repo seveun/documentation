@@ -230,9 +230,3 @@ Cuando quieres rastrear todo el sitio pero excluir ciertas secciones:
 | `**/blog` | `**/blog/**` (falta slash final) |
 | `blog` (subdominio) | `blog.` (falta punto) |
 
----
-
-## Pruebas
-
-Prueba tus patrones antes de introducirlos en el front:
-- [regex101.com](https://regex101.com/) - Probador de patrones online

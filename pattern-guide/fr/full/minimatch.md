@@ -230,9 +230,3 @@ Quand vous voulez crawler tout le site mais exclure certaines sections :
 | `**/blog` | `**/blog/**` (oubli du slash final) |
 | `blog` (sous-domaine) | `blog.` (oubli du point) |
 
----
-
-## Test et validation
-
-Pour tester vos patterns avant de les rentrer sur le front :
-- [regex101.com](https://regex101.com/) - Testeur de patterns en ligne
