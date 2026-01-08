@@ -10,32 +10,45 @@
 | `[abc]` | One of a, b, c |
 | `[!abc]` | Not a, b, c |
 
-## Options
+## Form Fields
 
-| Option | Logic | Example |
-|--------|-------|---------|
-| `includePatterns` | All must match (AND) | `["**/blog/**"]` |
-| `excludePatterns` | One excludes (OR) | `["**/*.pdf"]` |
-| `subdomainsPatterns` | Allow subdomains | `["blog.", "shop."]` |
+| Field | Logic |
+|-------|-------|
+| Include Patterns | All must match (AND) |
+| Exclude Patterns | One excludes (OR) |
+| Subdomains Patterns | Allow subdomains |
 
 ## Quick Examples
 
-```json
-// Blog only
-{ "includePatterns": ["**/blog/**"] }
+**Blog only** - Include Patterns:
+| Pattern |
+|---------|
+| `**/blog/**` |
 
-// Exclude PDFs and pagination
-{ "excludePatterns": ["**/*.pdf", "**/page/[2-9]/**"] }
+**Exclude PDFs and pagination** - Exclude Patterns:
+| Pattern |
+|---------|
+| `**/*.pdf` |
+| `**/page/[2-9]/**` |
 
-// Language subdomains
-{ "subdomainsPatterns": ["en.", "fr.", "de."] }
+**Language subdomains** - Subdomains Patterns:
+| Pattern |
+|---------|
+| `en.` |
+| `fr.` |
+| `de.` |
 
-// Blog except 2020
-{
-  "includePatterns": ["**/blog/**"],
-  "excludePatterns": ["**/blog/2020/**"]
-}
-```
+**Blog except 2020**:
+
+Include Patterns:
+| Pattern |
+|---------|
+| `**/blog/**` |
+
+Exclude Patterns:
+| Pattern |
+|---------|
+| `**/blog/2020/**` |
 
 ## Common Mistakes
 

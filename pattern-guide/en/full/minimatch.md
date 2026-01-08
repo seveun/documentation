@@ -6,11 +6,17 @@ These patterns filter which URLs the crawler will explore. They use **glob** syn
 
 ## How It Works
 
-- **includePatterns**: The crawler ONLY follows URLs that match ALL patterns
-- **excludePatterns**: The crawler ignores URLs that match AT LEAST ONE pattern
-- **subdomainsPatterns**: Allows crawling specific subdomains
+In the crawl configuration form, you have 3 URL filtering fields:
+
+| Field | Behavior |
+|-------|----------|
+| **Include Patterns** | The crawler ONLY follows URLs that match ALL patterns |
+| **Exclude Patterns** | The crawler ignores URLs that match AT LEAST ONE pattern |
+| **Subdomains Patterns** | Allows crawling specific subdomains |
 
 **Important**: These patterns apply to the URL **path** (after the domain), not the domain itself.
+
+Each field allows multiple patterns (+ button). Enter one pattern per line.
 
 ---
 
@@ -32,8 +38,8 @@ These patterns filter which URLs the crawler will explore. They use **glob** syn
 
 With multiple include patterns, **ALL must match** (AND).
 
-| Goal | Pattern |
-|------|---------|
+| Goal | Pattern to enter |
+|------|------------------|
 | Blog only | `**/blog/**` |
 | Product pages | `**/product/**` |
 | English version | `**/en/**` |
@@ -45,15 +51,20 @@ With multiple include patterns, **ALL must match** (AND).
 
 With multiple exclude patterns, **ONE is enough** to exclude (OR).
 
-| Goal | Pattern |
-|------|---------|
+| Goal | Pattern to enter |
+|------|------------------|
 | Exclude PDFs | `**/*.pdf` |
-| Exclude pagination | `**/page/[2-9]/**`, `**/page/[1-9][0-9]/**` |
-| Exclude search | `**/search/**`, `**?s=**` |
-| Exclude admin | `**/admin/**`, `**/wp-admin/**` |
-| Exclude cart | `**/cart/**`, `**/checkout/**` |
-| Exclude account | `**/account/**`, `**/my-account/**` |
-| Exclude sorting | `**?*sort=**`, `**?*orderby=**` |
+| Exclude pagination | `**/page/[2-9]/**` |
+| Exclude pagination 10+ | `**/page/[1-9][0-9]/**` |
+| Exclude search | `**/search/**` |
+| Exclude search (param) | `**?s=**` |
+| Exclude admin | `**/admin/**` |
+| Exclude wp-admin | `**/wp-admin/**` |
+| Exclude cart | `**/cart/**` |
+| Exclude checkout | `**/checkout/**` |
+| Exclude account | `**/account/**` |
+| Exclude sorting | `**?*sort=**` |
+| Exclude filters | `**?*orderby=**` |
 
 ---
 
@@ -61,14 +72,30 @@ With multiple exclude patterns, **ONE is enough** to exclude (OR).
 
 By default, the crawler stays on the main domain. The pattern matches the part **BEFORE** the domain.
 
-| Goal | Pattern |
-|------|---------|
+| Goal | Pattern to enter |
+|------|------------------|
 | Blog subdomain | `blog.` |
 | Shop subdomain | `shop.` |
-| EU languages | `["en.", "fr.", "de.", "es.", "it."]` |
 | All subdomains | `*` |
 
 **Note**: Don't forget the trailing dot (`blog.` not `blog`).
+
+For EU languages, add one pattern per subdomain:
+- `en.`
+- `fr.`
+- `de.`
+- `es.`
+- `it.`
+
+---
+
+## Understanding Include / Exclude Logic
+
+**Important**: If you define an Include Pattern, only URLs that match will be crawled. Everything else is **automatically excluded**.
+
+Exclude Patterns are only useful to:
+1. **Refine** what's already included (e.g., blog except pagination)
+2. **Filter a full crawl** when you have no Include Pattern
 
 ---
 
@@ -76,104 +103,120 @@ By default, the crawler stays on the main domain. The pattern matches the part *
 
 ### 1. Blog SEO Audit
 
-Crawl only the blog excluding low-value pages.
+**Include Patterns**:
+| Pattern |
+|---------|
+| `**/blog/**` |
 
-```json
-{
-  "includePatterns": ["**/blog/**"],
-  "excludePatterns": [
-    "**/author/**",
-    "**/tag/**",
-    "**/category/**",
-    "**/page/[2-9]/**",
-    "**/page/[1-9][0-9]/**"
-  ]
-}
-```
+That's it! Pages like `/cart/`, `/admin/`, etc. don't match `**/blog/**` so they're already excluded.
 
-### 2. E-commerce Audit
+To refine (optional) - exclude pagination and author pages from the blog:
 
-Crawl product pages excluding checkout funnel.
+**Exclude Patterns**:
+| Pattern |
+|---------|
+| `**/page/[2-9]/**` |
+| `**/page/[1-9][0-9]/**` |
+| `**/author/**` |
 
-```json
-{
-  "includePatterns": ["**/product/**"],
-  "excludePatterns": [
-    "**/cart/**",
-    "**/checkout/**",
-    "**/account/**",
-    "**/wishlist/**",
-    "**?*sort=**",
-    "**?*filter=**"
-  ]
-}
-```
+---
+
+### 2. E-commerce Audit - Product Pages Only
+
+**Include Patterns**:
+| Pattern |
+|---------|
+| `**/product/**` |
+
+To refine (optional) - exclude filter variations:
+
+**Exclude Patterns**:
+| Pattern |
+|---------|
+| `**?*sort=**` |
+| `**?*filter=**` |
+
+---
 
 ### 3. Multilingual Site - English Only
 
-```json
-{
-  "includePatterns": ["**/en/**"]
-}
-```
+**Include Patterns**:
+| Pattern |
+|---------|
+| `**/en/**` |
 
 Or if using subdomains:
 
-```json
-{
-  "subdomainsPatterns": ["en."]
-}
-```
+**Subdomains Patterns**:
+| Pattern |
+|---------|
+| `en.` |
+
+---
 
 ### 4. Multilingual Site - All EU Versions
 
-```json
-{
-  "subdomainsPatterns": ["en.", "fr.", "de.", "es.", "it.", "nl.", "be."]
-}
-```
+**Subdomains Patterns**:
+| Pattern |
+|---------|
+| `en.` |
+| `fr.` |
+| `de.` |
+| `es.` |
+| `it.` |
+| `nl.` |
+| `be.` |
 
-### 5. Exclude All Low SEO Value Pages
+---
 
-```json
-{
-  "excludePatterns": [
-    "**/search/**",
-    "**?s=**",
-    "**/tag/**",
-    "**/tags/**",
-    "**/author/**",
-    "**/page/[2-9]/**",
-    "**/page/[1-9][0-9]/**",
-    "**/admin/**",
-    "**/wp-admin/**",
-    "**/cart/**",
-    "**/checkout/**",
-    "**/account/**",
-    "**/login/**",
-    "**/*.pdf",
-    "**/*.zip"
-  ]
-}
-```
+### 5. Full Crawl EXCEPT Low SEO Value Pages
+
+When you want to crawl the entire site but exclude certain sections:
+
+**Exclude Patterns**:
+| Pattern |
+|---------|
+| `**/search/**` |
+| `**?s=**` |
+| `**/tag/**` |
+| `**/author/**` |
+| `**/page/[2-9]/**` |
+| `**/page/[1-9][0-9]/**` |
+| `**/admin/**` |
+| `**/wp-admin/**` |
+| `**/cart/**` |
+| `**/checkout/**` |
+| `**/account/**` |
+| `**/login/**` |
+| `**/*.pdf` |
+
+---
 
 ### 6. Crawl Blog Except Specific Year
 
-```json
-{
-  "includePatterns": ["**/blog/**"],
-  "excludePatterns": ["**/blog/2020/**"]
-}
-```
+**Include Patterns**:
+| Pattern |
+|---------|
+| `**/blog/**` |
 
-### 7. Crawl Category Pages Only
+**Exclude Patterns**:
+| Pattern |
+|---------|
+| `**/blog/2020/**` |
 
-```json
-{
-  "includePatterns": ["**/category/**"],
-  "excludePatterns": ["**/page/[2-9]/**"]
-}
-```
+---
+
+### 7. Crawl Category Pages Only (No Pagination)
+
+**Include Patterns**:
+| Pattern |
+|---------|
+| `**/category/**` |
+
+**Exclude Patterns**:
+| Pattern |
+|---------|
+| `**/page/[2-9]/**` |
 
 ---
 
