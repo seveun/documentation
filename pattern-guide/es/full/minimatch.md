@@ -194,6 +194,5 @@ O si usa subdominios:
 
 ## Pruebas
 
-Prueba tus patrones en:
-- [Globster.xyz](https://globster.xyz/) para probar patrones glob
-- Consola del navegador con URLs de ejemplo
+Prueba tus patrones antes de introducirlos en el front:
+- [regex101.com](https://regex101.com/) - Probador de patrones online

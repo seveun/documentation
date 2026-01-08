@@ -15,25 +15,16 @@
 
 ## Exemples rapides
 
-```json
-// Prix
-{ "extractPattern": ".price", "extractName": "prix" }
-
-// Prix (classe partielle)
-{ "extractPattern": "[class*=\"price\"]", "extractName": "prix" }
-
-// Titre produit
-{ "extractPattern": "h1.product-title", "extractName": "titre" }
-
-// Date publication
-{ "extractPattern": "time[datetime]", "extractName": "date" }
-
-// SKU via data-attribute
-{ "extractPattern": "[data-sku]", "extractName": "sku" }
-
-// Contenu principal
-{ "extractPattern": "main", "extractName": "contenu" }
-```
+| Objectif | Extraction Pattern |
+|----------|-------------------|
+| Prix | `.price` |
+| Prix (classe partielle) | `[class*="price"]` |
+| Titre produit | `h1.product-title` |
+| Date publication | `time[datetime]` |
+| SKU | `[data-sku]` |
+| Contenu principal | `main` |
+| Categories | `.breadcrumb a` |
+| Auteur | `.author-name` |
 
 ## Erreurs frequentes
 

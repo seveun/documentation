@@ -2,7 +2,7 @@
 
 ## Sintaxis
 
-Sin prefijo. Sin `/`. Escapar `\` como `\\` en JSON.
+Sin prefijo. Sin `/`.
 
 | Patron | Significado |
 |--------|-------------|
@@ -21,32 +21,21 @@ Sin prefijo. Sin `/`. Escapar `\` como `\\` en JSON.
 
 ## Ejemplos rapidos
 
-```json
-// Precio euros
-{ "extractPattern": "(\\d+[,.]\\d{2})\\s*€", "extractName": "precio" }
-
-// Telefono ES
-{ "extractPattern": "(\\+34[\\s.-]?[6-9]\\d{2}[\\s.-]?\\d{3}[\\s.-]?\\d{3})", "extractName": "tel" }
-
-// Email
-{ "extractPattern": "([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})", "extractName": "email" }
-
-// Codigo postal ES
-{ "extractPattern": "\\b(\\d{5})\\b", "extractName": "cp" }
-
-// Fecha DD/MM/AAAA
-{ "extractPattern": "(\\d{2}/\\d{2}/\\d{4})", "extractName": "fecha" }
-
-// Tipos schema.org
-{ "extractPattern": "\"@type\"\\s*:\\s*\"([^\"]+)\"", "extractName": "schema" }
-```
+| Objetivo | Extraction Pattern |
+|----------|-------------------|
+| Precio euros | `(\d+[,.]\d{2})\s*€` |
+| Telefono ES | `(\+34[\s.-]?[6-9]\d{2}[\s.-]?\d{3}[\s.-]?\d{3})` |
+| Email | `([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})` |
+| Codigo postal ES | `\b(\d{5})\b` |
+| Fecha DD/MM/AAAA | `(\d{2}/\d{2}/\d{4})` |
+| Tipos schema.org | `"@type"\s*:\s*"([^"]+)"` |
 
 ## Errores frecuentes
 
 | Mal | Bien |
 |-----|------|
-| `/\d+/` | `\\d+` |
-| `precio: \d+` | `precio: (\\d+)` (captura) |
+| `/\d+/` | `\d+` |
+| `precio: \d+` | `precio: (\d+)` (captura) |
 | `<div>.*</div>` | `<div>.*?</div>` (non-greedy) |
 
 ## Prueba

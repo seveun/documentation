@@ -2,7 +2,7 @@
 
 ## Syntax
 
-No prefix. No `/`. Escape `\` as `\\` in JSON.
+No prefix. No `/`.
 
 | Pattern | Meaning |
 |---------|---------|
@@ -21,32 +21,21 @@ No prefix. No `/`. Escape `\` as `\\` in JSON.
 
 ## Quick Examples
 
-```json
-// US price
-{ "extractPattern": "\\$(\\d+\\.\\d{2})", "extractName": "price" }
-
-// US phone
-{ "extractPattern": "(\\d{3}[-.\\s]?\\d{3}[-.\\s]?\\d{4})", "extractName": "phone" }
-
-// Email
-{ "extractPattern": "([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})", "extractName": "email" }
-
-// US zip code
-{ "extractPattern": "\\b(\\d{5})\\b", "extractName": "zip" }
-
-// Date MM/DD/YYYY
-{ "extractPattern": "(\\d{2}/\\d{2}/\\d{4})", "extractName": "date" }
-
-// Schema.org types
-{ "extractPattern": "\"@type\"\\s*:\\s*\"([^\"]+)\"", "extractName": "schema" }
-```
+| Purpose | Extraction Pattern |
+|---------|-------------------|
+| US price | `\$(\d+\.\d{2})` |
+| US phone | `(\d{3}[-.\\s]?\d{3}[-.\\s]?\d{4})` |
+| Email | `([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})` |
+| US zip code | `\b(\d{5})\b` |
+| Date MM/DD/YYYY | `(\d{2}/\d{2}/\d{4})` |
+| Schema.org types | `"@type"\s*:\s*"([^"]+)"` |
 
 ## Common Mistakes
 
 | Wrong | Right |
 |-------|-------|
-| `/\d+/` | `\\d+` |
-| `price: \d+` | `price: (\\d+)` (capture) |
+| `/\d+/` | `\d+` |
+| `price: \d+` | `price: (\d+)` (capture) |
 | `<div>.*</div>` | `<div>.*?</div>` (non-greedy) |
 
 ## Testing

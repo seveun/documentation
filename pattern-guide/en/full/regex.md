@@ -6,20 +6,12 @@ Regex extracts text by matching patterns in the HTML source code.
 
 ## How It Works
 
-Write your regex directly in `extractPattern` (no prefix).
-
-```json
-{
-  "extractPattern": "(\\d+[,.]\\d{2})\\s*\\$",
-  "extractName": "price"
-}
-```
+Write your regex directly in the **Extraction Pattern** field (no prefix).
 
 **Important**:
 - Do NOT wrap with `/`
 - Use **capture groups** `()` to extract specific parts
 - The `g` flag (global) is applied automatically
-- Escape backslashes: `\d` becomes `\\d` in JSON
 
 ---
 
@@ -79,191 +71,76 @@ Write your regex directly in `extractPattern` (no prefix).
 
 ### 1. Extract Prices
 
-**US format ($29.99):**
-```json
-{
-  "extractPattern": "\\$(\\d+\\.\\d{2})",
-  "extractName": "price"
-}
-```
-
-**European format (29,99 €):**
-```json
-{
-  "extractPattern": "(\\d+[,.]\\d{2})\\s*€",
-  "extractName": "price"
-}
-```
-
-**With EUR:**
-```json
-{
-  "extractPattern": "(\\d+[,.]\\d{2})\\s*EUR",
-  "extractName": "price"
-}
-```
+| Method | Extraction Pattern |
+|--------|-------------------|
+| US format ($29.99) | `\$(\d+\.\d{2})` |
+| European format (29,99 €) | `(\d+[,.]\d{2})\s*€` |
+| With EUR | `(\d+[,.]\d{2})\s*EUR` |
 
 ### 2. Extract Phone Numbers
 
-**US format:**
-```json
-{
-  "extractPattern": "(\\d{3}[-.\\s]?\\d{3}[-.\\s]?\\d{4})",
-  "extractName": "phone"
-}
-```
+| Method | Extraction Pattern |
+|--------|-------------------|
+| US format | `(\d{3}[-.\\s]?\d{3}[-.\\s]?\d{4})` |
+| UK format | `(0\d{2,4}[\s.-]?\d{3,4}[\s.-]?\d{3,4})` |
+| International | `(\+1[\s.-]?\d{3}[\s.-]?\d{3}[\s.-]?\d{4})` |
+
 Matches: "555-123-4567", "5551234567", "555.123.4567"
-
-**UK format:**
-```json
-{
-  "extractPattern": "(0\\d{2,4}[\\s.-]?\\d{3,4}[\\s.-]?\\d{3,4})",
-  "extractName": "phone"
-}
-```
-
-**International:**
-```json
-{
-  "extractPattern": "(\\+1[\\s.-]?\\d{3}[\\s.-]?\\d{3}[\\s.-]?\\d{4})",
-  "extractName": "phone"
-}
-```
 
 ### 3. Extract Emails
 
-```json
-{
-  "extractPattern": "([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})",
-  "extractName": "email"
-}
-```
+| Method | Extraction Pattern |
+|--------|-------------------|
+| Standard email | `([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})` |
 
 ### 4. Extract Zip Codes
 
-**US (5 digits or 5+4):**
-```json
-{
-  "extractPattern": "\\b(\\d{5}(?:-\\d{4})?)\\b",
-  "extractName": "zip_code"
-}
-```
-
-**UK:**
-```json
-{
-  "extractPattern": "([A-Z]{1,2}\\d[A-Z\\d]?\\s?\\d[A-Z]{2})",
-  "extractName": "postcode"
-}
-```
+| Method | Extraction Pattern |
+|--------|-------------------|
+| US (5 digits or 5+4) | `\b(\d{5}(?:-\d{4})?)\b` |
+| UK | `([A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2})` |
 
 ### 5. Extract Dates
 
-**MM/DD/YYYY format:**
-```json
-{
-  "extractPattern": "(\\d{2}/\\d{2}/\\d{4})",
-  "extractName": "date"
-}
-```
-
-**YYYY-MM-DD format:**
-```json
-{
-  "extractPattern": "(\\d{4}-\\d{2}-\\d{2})",
-  "extractName": "date"
-}
-```
-
-**Text format:**
-```json
-{
-  "extractPattern": "((?:January|February|March|April|May|June|July|August|September|October|November|December)\\s+\\d{1,2},?\\s+\\d{4})",
-  "extractName": "date"
-}
-```
+| Method | Extraction Pattern |
+|--------|-------------------|
+| MM/DD/YYYY format | `(\d{2}/\d{2}/\d{4})` |
+| YYYY-MM-DD format | `(\d{4}-\d{2}-\d{2})` |
+| Text format | `((?:January\|February\|March\|April\|May\|June\|July\|August\|September\|October\|November\|December)\s+\d{1,2},?\s+\d{4})` |
 
 ### 6. Extract Product References
 
-**Format ABC-12345:**
-```json
-{
-  "extractPattern": "([A-Z]{2,4}-\\d{4,6})",
-  "extractName": "reference"
-}
-```
-
-**EAN/GTIN format:**
-```json
-{
-  "extractPattern": "\\b(\\d{13})\\b",
-  "extractName": "ean"
-}
-```
+| Method | Extraction Pattern |
+|--------|-------------------|
+| Format ABC-12345 | `([A-Z]{2,4}-\d{4,6})` |
+| EAN/GTIN format | `\b(\d{13})\b` |
 
 ### 7. Extract Structured Data
 
-**Schema.org types:**
-```json
-{
-  "extractPattern": "\"@type\"\\s*:\\s*\"([^\"]+)\"",
-  "extractName": "schema_types"
-}
-```
+| Method | Extraction Pattern |
+|--------|-------------------|
+| Schema.org types | `"@type"\s*:\s*"([^"]+)"` |
 
 ### 8. Extract Specific Meta Tags
 
-**Meta author content:**
-```json
-{
-  "extractPattern": "<meta[^>]*name=[\"']author[\"'][^>]*content=[\"']([^\"']+)[\"']",
-  "extractName": "author"
-}
-```
-
-**Meta robots content:**
-```json
-{
-  "extractPattern": "<meta[^>]*name=[\"']robots[\"'][^>]*content=[\"']([^\"']+)[\"']",
-  "extractName": "meta_robots"
-}
-```
+| Method | Extraction Pattern |
+|--------|-------------------|
+| Meta author | `<meta[^>]*name=["']author["'][^>]*content=["']([^"']+)["']` |
+| Meta robots | `<meta[^>]*name=["']robots["'][^>]*content=["']([^"']+)["']` |
 
 ### 9. Extract Data Attributes
 
-**data-product-id:**
-```json
-{
-  "extractPattern": "data-product-id=[\"'](\\d+)[\"']",
-  "extractName": "product_id"
-}
-```
-
-**data-price:**
-```json
-{
-  "extractPattern": "data-price=[\"']([\\d.,]+)[\"']",
-  "extractName": "price"
-}
-```
+| Method | Extraction Pattern |
+|--------|-------------------|
+| data-product-id | `data-product-id=["'](\d+)["']` |
+| data-price | `data-price=["']([\d.,]+)["']` |
 
 ### 10. Extract URLs
 
-**Image URLs:**
-```json
-{
-  "extractPattern": "<img[^>]+src=[\"']([^\"']+)[\"']",
-  "extractName": "images"
-}
-```
-
-**Link URLs:**
-```json
-{
-  "extractPattern": "<a[^>]+href=[\"']([^\"']+)[\"']",
-  "extractName": "links"
-}
-```
+| Method | Extraction Pattern |
+|--------|-------------------|
+| Image URLs | `<img[^>]+src=["']([^"']+)["']` |
+| Link URLs | `<a[^>]+href=["']([^"']+)["']` |
 
 ---
 
@@ -272,11 +149,10 @@ Matches: "555-123-4567", "5551234567", "555.123.4567"
 | Mistake | Fix |
 |---------|-----|
 | `/\d+/` | `\d+` (no slashes) |
-| `\d+` in JSON | `\\d+` (escape backslashes) |
 | `price: \d+` | `price: (\d+)` (capture group) |
 | `<div>.*</div>` | `<div>.*?</div>` (non-greedy) |
-| `10.99` | `10\\.99` (escape dot) |
-| `$10` | `\\$10` (escape dollar) |
+| `10.99` | `10\.99` (escape dot) |
+| `$10` | `\$10` (escape dollar) |
 
 ---
 
@@ -299,12 +175,4 @@ Only the **first group** `()` content is extracted. Use `(?:...)` for non-captur
 ```
 Regex: price:\s*(\d+)\s*(?:€|EUR)
 Captures: only the number
-```
-
-### JSON Escaping
-
-In JSON, double the backslashes:
-```
-Normal regex: \d+
-In JSON:      \\d+
 ```

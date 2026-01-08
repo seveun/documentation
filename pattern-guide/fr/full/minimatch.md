@@ -192,6 +192,5 @@ Ou si le site utilise des sous-domaines :
 
 ## Test et validation
 
-Pour tester vos patterns, vous pouvez utiliser :
-- [Globster.xyz](https://globster.xyz/) pour tester les patterns glob
-- La console du navigateur avec des exemples d'URLs
+Pour tester vos patterns avant de les rentrer sur le front :
+- [regex101.com](https://regex101.com/) - Testeur de patterns en ligne

@@ -2,7 +2,7 @@
 
 ## Syntaxe
 
-Pas de prefixe. Pas de `/`. Echapper `\` en `\\` dans JSON.
+Pas de prefixe. Pas de `/`.
 
 | Pattern | Signification |
 |---------|---------------|
@@ -21,32 +21,21 @@ Pas de prefixe. Pas de `/`. Echapper `\` en `\\` dans JSON.
 
 ## Exemples rapides
 
-```json
-// Prix euros
-{ "extractPattern": "(\\d+[,.]\\d{2})\\s*€", "extractName": "prix" }
-
-// Telephone FR
-{ "extractPattern": "(0[1-9](?:[\\s.-]?\\d{2}){4})", "extractName": "tel" }
-
-// Email
-{ "extractPattern": "([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})", "extractName": "email" }
-
-// Code postal FR
-{ "extractPattern": "\\b(\\d{5})\\b", "extractName": "cp" }
-
-// Date JJ/MM/AAAA
-{ "extractPattern": "(\\d{2}/\\d{2}/\\d{4})", "extractName": "date" }
-
-// Schema.org types
-{ "extractPattern": "\"@type\"\\s*:\\s*\"([^\"]+)\"", "extractName": "schema" }
-```
+| Objectif | Extraction Pattern |
+|----------|-------------------|
+| Prix euros | `(\d+[,.]\d{2})\s*€` |
+| Telephone FR | `(0[1-9](?:[\s.-]?\d{2}){4})` |
+| Email | `([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})` |
+| Code postal FR | `\b(\d{5})\b` |
+| Date JJ/MM/AAAA | `(\d{2}/\d{2}/\d{4})` |
+| Schema.org types | `"@type"\s*:\s*"([^"]+)"` |
 
 ## Erreurs frequentes
 
 | Faux | Juste |
 |------|-------|
-| `/\d+/` | `\\d+` |
-| `prix: \d+` | `prix: (\\d+)` (capture) |
+| `/\d+/` | `\d+` |
+| `prix: \d+` | `prix: (\d+)` (capture) |
 | `<div>.*</div>` | `<div>.*?</div>` (non-greedy) |
 
 ## Test

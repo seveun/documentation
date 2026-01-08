@@ -6,14 +6,7 @@ Les selecteurs CSS permettent d'extraire des elements HTML specifiques de chaque
 
 ## Comment ca fonctionne
 
-Entrez votre selecteur CSS dans le champ d'extraction.
-
-```
-extractPattern: ".product-price"
-extractName: "prix"
-```
-
-Le crawler extrait le **texte** de tous les elements qui matchent le selecteur.
+Entrez votre selecteur CSS dans le champ **Extraction Pattern**. Le crawler extrait le **texte** de tous les elements qui matchent.
 
 ---
 
@@ -63,194 +56,75 @@ Le crawler extrait le **texte** de tous les elements qui matchent le selecteur.
 
 ### 1. Extraire les prix
 
-**Par classe :**
-```json
-{
-  "extractPattern": ".price",
-  "extractName": "prix"
-}
-```
-
-**Par classe partielle :**
-```json
-{
-  "extractPattern": "[class*=\"price\"]",
-  "extractName": "prix"
-}
-```
-
-**Prix dans un conteneur produit :**
-```json
-{
-  "extractPattern": ".product .price",
-  "extractName": "prix"
-}
-```
+| Methode | Extraction Pattern |
+|---------|-------------------|
+| Par classe | `.price` |
+| Par classe partielle | `[class*="price"]` |
+| Dans un conteneur | `.product .price` |
 
 ### 2. Extraire les titres de produits
 
-```json
-{
-  "extractPattern": "h1.product-title",
-  "extractName": "titre_produit"
-}
-```
-
-Ou plus generique :
-```json
-{
-  "extractPattern": "[class*=\"product-title\"]",
-  "extractName": "titre_produit"
-}
-```
+| Methode | Extraction Pattern |
+|---------|-------------------|
+| H1 avec classe | `h1.product-title` |
+| Classe partielle | `[class*="product-title"]` |
 
 ### 3. Extraire les references/SKU
 
-**Via data-attribute :**
-```json
-{
-  "extractPattern": "[data-sku]",
-  "extractName": "sku"
-}
-```
-
-**Via classe :**
-```json
-{
-  "extractPattern": ".product-reference",
-  "extractName": "reference"
-}
-```
+| Methode | Extraction Pattern |
+|---------|-------------------|
+| Via data-attribute | `[data-sku]` |
+| Via classe | `.product-reference` |
 
 ### 4. Extraire les notes/avis
 
-```json
-{
-  "extractPattern": "[class*=\"rating\"]",
-  "extractName": "note"
-}
-```
-
-Ou :
-```json
-{
-  "extractPattern": ".review-score",
-  "extractName": "note"
-}
-```
+| Methode | Extraction Pattern |
+|---------|-------------------|
+| Classe partielle | `[class*="rating"]` |
+| Classe exacte | `.review-score` |
 
 ### 5. Extraire le contenu principal
 
-**Via balise semantique :**
-```json
-{
-  "extractPattern": "main",
-  "extractName": "contenu"
-}
-```
-
-**Via ID :**
-```json
-{
-  "extractPattern": "#content",
-  "extractName": "contenu"
-}
-```
-
-**Via balise article :**
-```json
-{
-  "extractPattern": "article",
-  "extractName": "contenu"
-}
-```
+| Methode | Extraction Pattern |
+|---------|-------------------|
+| Balise semantique | `main` |
+| Par ID | `#content` |
+| Balise article | `article` |
 
 ### 6. Extraire les dates de publication
 
-**Via balise time :**
-```json
-{
-  "extractPattern": "time[datetime]",
-  "extractName": "date_publication"
-}
-```
-
-**Via classe :**
-```json
-{
-  "extractPattern": ".post-date",
-  "extractName": "date_publication"
-}
-```
+| Methode | Extraction Pattern |
+|---------|-------------------|
+| Balise time | `time[datetime]` |
+| Par classe | `.post-date` |
 
 ### 7. Extraire les categories
 
-```json
-{
-  "extractPattern": ".breadcrumb a",
-  "extractName": "categories"
-}
-```
-
-Ou :
-```json
-{
-  "extractPattern": "[class*=\"category\"] a",
-  "extractName": "categories"
-}
-```
+| Methode | Extraction Pattern |
+|---------|-------------------|
+| Breadcrumb | `.breadcrumb a` |
+| Classe partielle | `[class*="category"] a` |
 
 ### 8. Extraire les auteurs
 
-```json
-{
-  "extractPattern": ".author-name",
-  "extractName": "auteur"
-}
-```
-
-Ou :
-```json
-{
-  "extractPattern": "[rel=\"author\"]",
-  "extractName": "auteur"
-}
-```
+| Methode | Extraction Pattern |
+|---------|-------------------|
+| Par classe | `.author-name` |
+| Par attribut rel | `[rel="author"]` |
 
 ### 9. Extraire la disponibilite produit
 
-```json
-{
-  "extractPattern": "[class*=\"availability\"]",
-  "extractName": "disponibilite"
-}
-```
-
-Ou :
-```json
-{
-  "extractPattern": "[class*=\"stock\"]",
-  "extractName": "stock"
-}
-```
+| Methode | Extraction Pattern |
+|---------|-------------------|
+| Disponibilite | `[class*="availability"]` |
+| Stock | `[class*="stock"]` |
 
 ### 10. Extraire les meta tags
 
-**Meta description :**
-```json
-{
-  "extractPattern": "meta[name=\"description\"]",
-  "extractName": "meta_description"
-}
-```
-
-**Meta robots :**
-```json
-{
-  "extractPattern": "meta[name=\"robots\"]",
-  "extractName": "meta_robots"
-}
-```
+| Methode | Extraction Pattern |
+|---------|-------------------|
+| Meta description | `meta[name="description"]` |
+| Meta robots | `meta[name="robots"]` |
 
 ---
 
@@ -259,7 +133,7 @@ Ou :
 | Erreur | Correction |
 |--------|------------|
 | `.price product` | `.price.product` ou `.price .product` |
-| `div[class=price]` | `div[class*="price"]` (classe exacte vs contient) |
+| `div[class=price]` | `div[class*="price"]` |
 
 ---
 
@@ -287,4 +161,3 @@ Preferez les selecteurs qui ne changeront pas :
 | Structure HTML connue | CSS |
 | Texte dans le code source | Regex |
 | Pattern complexe dans le texte | Regex |
-| Performance critique | CSS (plus rapide) |

@@ -190,6 +190,5 @@ Or if using subdomains:
 
 ## Testing
 
-Test your patterns at:
-- [Globster.xyz](https://globster.xyz/) for glob pattern testing
-- Browser console with sample URLs
+Test your patterns before entering them in the frontend:
+- [regex101.com](https://regex101.com/) - Online pattern tester
